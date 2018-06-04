@@ -24,15 +24,16 @@ import org.slf4j.LoggerFactory
  * Names that can't be url-encoded will be set to default values.
  *
  * Valid characteers for metrics and label names are: A-Z, a-z, digits and '_'.
- * Metrics and label names cannot start with digit.
  * Metric name can also contain ':'.
- *
+ * Metrics and label names cannot start with digit.
+ * All non-matching characters will be replaced with '_'.
+ * If some name starts with digit leading '_' will be added.
  */
 
 
 /**
  * serverIPnPort: String with prometheus pushgateway hostIP:Port,
- * metricsJob: String with job name
+ * metricsJob: job name
  */
 case class PushGateway(serverIPnPort: String, metricsJob: String) {
 
@@ -100,7 +101,7 @@ case class PushGateway(serverIPnPort: String, metricsJob: String) {
    * metrics: String with metric name-value pairs each ending with eol,
    * metricsType: metrics type (task or stage),
    * labelName: metrics label name,
-   * labelValue: metrics label value,
+   * labelValue: metrics label value
    */
   def post(metrics: String, metricsType: String, labelName: String, labelValue: String): Unit = {
 
